@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>StarWars</title>
+</head>
+
+<body>
+
+    <div id="contenido"></div>
+    <select id="listado"></select>
+    <button onclick="mostrarSeleccion()">Haz click</button>
+
+    <div id="personajes"></div>
+
+
+    <script>
+        let planets;
+        window.fetch('https://swapi.co/api/planets/')
+
+            .then(function recibirRespuesta(respuesta) {
+                return respuesta.json();
+            })
+            .then(recibirDatosPlanetas);
+
+
+
+
+        function recibirDatosPlanetas(datos) {
+            planets = datos.results;
+
+            let contenido = document.getElementById('listado');
+
+
+            for (let i = 0; i < planets.length; i++) {
+
+                contenido.innerHTML += `
+                    <option value="${[i]}">${planets[i].name}</option>`
+            }
+        }
+        function mostrarSeleccion() {
+
+            let planetaElegido = parseInt(document.getElementById('listado').value);
+            let planetaResidentes=document.getElementById('personajes');
+            let people='';
+
+            for (let i = 0; i < planets[planetaElegido].residents.length; i++) {
+
+                window.fetch(planets[planetaElegido].residents[i])
+
+                    .then(function recibirRespuesta(respuesta) {
+                        return respuesta.json();
+                    })
+                    .then(function MostrarDatos(datos) {
+                        people+= `
+                        <div>
+                        <p>planets[planetaElegido].residents[i].name</p>
+                            </div>`
+                    });
+
+            }
+                    planetaResidentes.innerHTML = residentes;
+        };
+        
+
+    
+
+
+    </script>
+
+</body>
+
+</html>
